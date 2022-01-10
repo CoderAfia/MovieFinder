@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Searcher</title>
+</head>
+
+<body> 
+    <label>Enter the movie</label>
+    <input id="moviename"> <br> <br>
+    <button id="submit" onclick="key1()">Submit</button>
+    <h1 id="title"></h1>
+    <p id="rated"></p>
+    <p id="time"></p>
+    <p id="type"></p>
+    <p id="genre"></p>
+    <p id="plot"></p>
+    <div id="image"></div>
+    
+    
+
+</body>
+<script>
+    var poster = document.createElement('img')
+    async function key1() {
+        var movie = document.getElementById('moviename').value
+        console.log(movie)
+        await fetch("http://www.omdbapi.com/?apikey=51b33037&t="+movie, { method: 'GET' }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                document.getElementById('title').innerHTML = data.Title
+                document.getElementById('rated').innerHTML = "Rated = "+data.Rated
+                document.getElementById('time').innerHTML = "Time for 1 movie/episode = "+data.Runtime
+                document.getElementById('type').innerHTML = "Type = "+data.Type
+                document.getElementById('genre').innerHTML = "Genre = "+data.Genre
+                document.getElementById('plot').innerHTML = "Plot = "+data.Plot
+                
+                poster.src = data.Poster
+                document.getElementById('image').appendChild(poster)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+
+        
+        
+    }
+    
+</script>
+
+</html>
